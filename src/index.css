@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-elmen-black text-elmen-text font-sans antialiased overflow-x-hidden;
+  }
+}
+
+/* Light-theme Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-elmen-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-elmen-gray rounded-full border border-elmen-lightgray hover:bg-elmen-orange transition-colors;
+}
+
+/* ── Light Glass Card ── */
+.glass-card {
+  @apply bg-white border border-elmen-gray/60 shadow-card rounded-2xl transition-all duration-300;
+}
+
+.glass-card:hover {
+  @apply border-elmen-orange/30 shadow-premium-glow;
+}
+
+/* ── Light Form Input ── */
+.glass-input {
+  @apply bg-elmen-lightgray/60 border border-elmen-gray rounded-xl px-4 py-2.5
+         text-elmen-text placeholder-elmen-muted
+         focus:outline-none focus:ring-2 focus:ring-elmen-orange/40 focus:border-elmen-orange
+         transition-all duration-200;
+}
+
+/* ── Form Label ── */
+.glass-label {
+  @apply block text-xs font-semibold text-elmen-muted mb-1.5 uppercase tracking-wider;
+}
+
+/* ── Section Header Pill ── */
+.section-pill {
+  @apply inline-flex items-center gap-2 px-3 py-1.5 bg-elmen-orange/10 border border-elmen-orange/20
+         text-elmen-orange text-xs font-bold rounded-lg uppercase tracking-wide;
+}
+
+/* ── Status badges ── */
+.badge-paid   { @apply bg-emerald-100 text-emerald-700 border border-emerald-200; }
+.badge-pending{ @apply bg-amber-100   text-amber-700   border border-amber-200;   }
+.badge-partial{ @apply bg-sky-100     text-sky-700     border border-sky-200;     }
+
+/* A4 Print Styling — stays white always */
+@media print {
+  @page {
+    margin: 0;
+  }
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .no-print,
+  header,
+  nav,
+  footer {
+    display: none !important;
+  }
+
+  #pdf-invoice-wrapper {
+    display: block !important;
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+  }
+
+  .print-invoice-container {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+    width: 210mm !important;
+    min-height: 297mm !important;
+    margin: 0 !important;
+    padding: 14mm 16mm !important;
+  }
+
+  tr {
+    page-break-inside: avoid !important;
+  }
+}
