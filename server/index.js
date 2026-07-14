@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 const cors = require('cors');
 require('dotenv').config();
 
@@ -301,6 +302,13 @@ app.post('/api/invoices/send-email', async (req, res) => {
     console.error('SMTP Mail Error:', error);
     res.status(500).json({ error: 'Failed to send email. Verification issue.' });
   }
+});
+
+app.use(express.static(path.join(__dirname, '../dist')));
+// The "catchall" handler: for any request that doesn't
+// match one of the API routes above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 app.listen(PORT, () => {

@@ -16,7 +16,7 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
+
     if (!username.trim() || !password.trim()) {
       setError('Please fill in all fields.');
       return;
@@ -26,7 +26,7 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
     // Simulate network authentication
     setTimeout(() => {
-      if (username === 'admin' && password === 'elmen@2026') {
+      if (username === 'admin5111' && password === 'elmen@5111') {
         sessionStorage.setItem('elmen_auth', 'true');
         onLoginSuccess();
       } else {
@@ -45,9 +45,9 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       <div className="w-full max-w-md bg-white border border-elmen-gray/60 shadow-card rounded-3xl p-8 space-y-6 relative z-10">
         <div className="text-center space-y-3">
           <div className="flex justify-center">
-            <img 
-              src={elmenLogo} 
-              alt="Elmen Logo" 
+            <img
+              src={elmenLogo}
+              alt="Elmen Logo"
               className="h-14 w-auto object-contain"
             />
           </div>
@@ -76,7 +76,7 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="glass-input w-full !pl-10 text-sm font-semibold"
-                placeholder="e.g. admin"
+                placeholder=" admin"
                 disabled={loading}
               />
             </div>
@@ -122,11 +122,7 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           </button>
         </form>
 
-        <div className="pt-2 text-center">
-          <p className="text-[10px] text-elmen-muted">
-            Hint: <span className="font-mono bg-elmen-dark px-1.5 py-0.5 rounded">admin</span> / <span className="font-mono bg-elmen-dark px-1.5 py-0.5 rounded">elmen@2026</span>
-          </p>
-        </div>
+
       </div>
     </div>
   );

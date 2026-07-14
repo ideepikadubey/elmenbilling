@@ -1,4 +1,4 @@
-﻿/**
+/**
  * company.ts — Hardcoded ELMEN Nutrition business constants.
  * These details are fixed and never need to be re-entered by the admin.
  */
@@ -6,7 +6,7 @@
 export const COMPANY = {
   name: 'Elmen Nutrition',
   gstin: '08GEKPS3379A3Z3',
-  fssai: '13322999000412',
+  fssai: '21526083008295',
   email: 'elmenindia@gmail.com',
   phone: '+91 9119119187',
   website: 'www.elmen.in',

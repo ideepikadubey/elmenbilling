@@ -2,6 +2,7 @@ import React from 'react';
 import { InvoiceData } from '../types/invoice';
 import { COMPANY, INVOICE_FOOTER_MESSAGE, TERMS_AND_CONDITIONS } from '../constants/company';
 import elmenLogo from '../assets/elmen-logo-white.png';
+import elmenQR from '../assets/elmenQR.jpeg';
 
 interface InvoicePreviewProps {
   data: InvoiceData;
@@ -166,24 +167,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
           {/* Left Side: QR Code + Pay Info */}
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '4mm' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#f8fafc', padding: '10px 14px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-              <svg width="56" height="56" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ border: '1px solid #cbd5e1', borderRadius: '6px', padding: '2px', background: '#fff', shrink: 0 }}>
-                <rect width="100" height="100" fill="white"/>
-                <rect x="5" y="5" width="25" height="25" stroke="#111" strokeWidth="6" fill="none"/>
-                <rect x="12" y="12" width="11" height="11" fill="#111"/>
-                <rect x="70" y="5" width="25" height="25" stroke="#111" strokeWidth="6" fill="none"/>
-                <rect x="77" y="12" width="11" height="11" fill="#111"/>
-                <rect x="5" y="70" width="25" height="25" stroke="#111" strokeWidth="6" fill="none"/>
-                <rect x="12" y="77" width="11" height="11" fill="#111"/>
-                <rect x="42" y="42" width="16" height="16" fill="#2563EB"/>
-                <rect x="40" y="10" width="8" height="8" fill="#111"/>
-                <rect x="55" y="15" width="6" height="12" fill="#111"/>
-                <rect x="10" y="45" width="12" height="6" fill="#111"/>
-                <rect x="15" y="55" width="8" height="8" fill="#111"/>
-                <rect x="45" y="70" width="10" height="10" fill="#111"/>
-                <rect x="70" y="45" width="12" height="12" fill="#111"/>
-                <rect x="80" y="65" width="15" height="6" fill="#111"/>
-                <rect x="75" y="80" width="12" height="10" fill="#111"/>
-              </svg>
+              <img src={elmenQR} alt="UPI QR Code" style={{ width: '56px', height: '56px', border: '1px solid #cbd5e1', borderRadius: '6px', padding: '2px', background: '#fff', flexShrink: 0, objectFit: 'contain' }} />
               <div>
                 <div style={{ fontWeight: '800', color: '#111', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Scan to Pay (UPI)</div>
                 <div style={{ color: '#555', fontSize: '7.5px', marginTop: '2px', lineHeight: '1.3' }}>Pay instantly via any UPI app. Scan this code to initiate transfer.</div>
