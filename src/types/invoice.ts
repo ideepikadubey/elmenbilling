@@ -85,7 +85,7 @@ export const PRODUCT_CATALOG: CatalogProduct[] = [
     defaultPrice: 6499,
     gstPercent: 0,
     sizes: ['2kg / 4.4 lbs (2000g)'],
-    flavors: ['Chocolate', 'Vanilla', 'Unflavored']
+    flavors: ['Chocolate', 'Kesar Badam', 'Cookie & Cream', 'Malai Kulfi', 'Vanilla', 'Unflavored']
   },
   {
     id: 'prod-2',
@@ -93,7 +93,7 @@ export const PRODUCT_CATALOG: CatalogProduct[] = [
     defaultPrice: 3899,
     gstPercent: 0,
     sizes: ['3kg / 6.6 lbs (3000g)'],
-    flavors: ['Chocolate', 'Unflavored']
+    flavors: ['Chocolate', 'Kesar Badam', 'Cookie & Cream', 'Malai Kulfi', 'Unflavored']
   },
   {
     id: 'prod-3',
@@ -149,6 +149,22 @@ export const PRODUCT_CATALOG: CatalogProduct[] = [
     defaultPrice: 1299,
     gstPercent: 0,
     sizes: ['60 Softgels'],
+    flavors: ['Unflavored']
+  },
+  {
+    id: 'prod-10',
+    name: 'ELMEN Stainless Steel Shaker',
+    defaultPrice: 399,
+    gstPercent: 0,
+    sizes: ['Standard'],
+    flavors: ['Unflavored']
+  },
+  {
+    id: 'prod-11',
+    name: 'ELMEN Plastic Shaker',
+    defaultPrice: 149,
+    gstPercent: 0,
+    sizes: ['Standard'],
     flavors: ['Unflavored']
   }
 ];

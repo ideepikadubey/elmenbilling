@@ -30,12 +30,11 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
       id="invoice-printable"
       className="print-invoice-container"
       style={{
-        width: '210mm',
-        minHeight: '297mm',
+        width: '148mm',
         backgroundColor: '#ffffff',
         color: '#111111',
         fontFamily: "'Outfit', 'Inter', Arial, sans-serif",
-        padding: '8mm 12mm 12mm 12mm',
+        padding: '0',
         boxSizing: 'border-box',
         display: 'flex',
         flexDirection: 'column',
@@ -47,7 +46,25 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
       }}
     >
       {/* Page 1 wrapper */}
-      <div style={{ minHeight: '270mm', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ position: 'relative', height: '202mm', padding: '8mm 12mm 12mm 12mm', boxSizing: 'border-box', display: 'flex', flexDirection: 'column' }}>
+        {/* Background Watermark */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '260px',
+          height: 'auto',
+          opacity: 0.10,
+          pointerEvents: 'none',
+          zIndex: 0,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <img src={elmenLogo} alt="Watermark" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
+        </div>
+
         {/* ── TOP BLUE ACCENT BAR ── */}
         <div style={{ height: '4px', background: 'linear-gradient(90deg, #111111 0%, #2563EB 50%, #111111 100%)', borderRadius: '2px', marginBottom: '4mm' }} />
 
@@ -58,7 +75,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
             <img
               src={elmenLogo}
               alt="Elmen Nutrition"
-              style={{ height: '56px', width: 'auto', objectFit: 'contain', display: 'block' }}
+              style={{ height: '85px', width: 'auto', objectFit: 'contain', display: 'block' }}
             />
           </div>
 
@@ -135,7 +152,9 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
           </thead>
           <tbody>
             {items.map((item, idx) => {
-              const taxable = Math.max(0, item.qty * item.unitPrice - item.discount);
+              const itemSubtotal = item.qty * item.unitPrice;
+              const discountAmt = itemSubtotal * (item.discount / 100);
+              const taxable = Math.max(0, itemSubtotal - discountAmt);
               const gstAmt = taxable * (item.gstPercent / 100);
               return (
                 <tr key={item.id} style={{ backgroundColor: idx % 2 === 0 ? '#ffffff' : '#fafafa', borderBottom: '1px solid #f0f0f0' }}>
@@ -148,8 +167,8 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
                   </td>
                   <td style={{ padding: '8px 8px', textAlign: 'center', fontWeight: '700' }}>{item.qty}</td>
                   <td style={{ padding: '8px 8px', textAlign: 'right', fontFamily: 'monospace' }}>{fmt(item.unitPrice)}</td>
-                  <td style={{ padding: '8px 8px', textAlign: 'right', fontFamily: 'monospace', color: '#16a34a' }}>
-                    {item.discount > 0 ? `-${fmt(item.discount)}` : '—'}
+                  <td style={{ padding: '8px 8px', textAlign: 'right', fontFamily: 'monospace', color: '#16a34a', whiteSpace: 'nowrap' }}>
+                    {item.discount > 0 ? `-${fmt(discountAmt)} (${item.discount}%)` : '—'}
                   </td>
                   <td style={{ padding: '8px 8px', textAlign: 'center', color: '#555' }}>
                     {item.gstPercent}%
@@ -165,7 +184,14 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
         {/* ── Page 1 Bottom: Totals & QR Code ── */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 220px', gap: '8mm', marginTop: 'auto', marginBottom: '4mm' }}>
           {/* Left Side: QR Code + Pay Info */}
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '4mm' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '3mm' }}>
+            {/* Total Items & Qty Block */}
+            <div style={{ display: 'flex', gap: '15px', background: '#f8fafc', padding: '6px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '9px', color: '#444' }}>
+              <span><strong>Total Items:</strong> {items.filter(i => i.name).length}</span>
+              <span style={{ color: '#cbd5e1' }}>|</span>
+              <span><strong>Total Qty:</strong> {items.filter(i => i.name).reduce((acc, item) => acc + (Number(item.qty) || 0), 0)}</span>
+            </div>
+
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#f8fafc', padding: '10px 14px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
               <img src={elmenQR} alt="UPI QR Code" style={{ width: '56px', height: '56px', border: '1px solid #cbd5e1', borderRadius: '6px', padding: '2px', background: '#fff', flexShrink: 0, objectFit: 'contain' }} />
               <div>
@@ -173,7 +199,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
                 <div style={{ color: '#555', fontSize: '7.5px', marginTop: '2px', lineHeight: '1.3' }}>Pay instantly via any UPI app. Scan this code to initiate transfer.</div>
               </div>
             </div>
-            
+
             <div style={{ fontSize: '8px', color: '#555', fontStyle: 'italic', padding: '6px 10px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px' }}>
               {INVOICE_FOOTER_MESSAGE}
             </div>
@@ -184,7 +210,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
             {[
               { label: 'Subtotal', value: fmt(summary.subtotal), bold: false },
               summary.discount > 0 ? { label: 'Item Discount', value: `-${fmt(summary.discount)}`, bold: false, green: true } : null,
-              summary.couponDiscount > 0 ? { label: 'Coupon Discount', value: `-${fmt(summary.couponDiscount)}`, bold: false, green: true } : null,
+              summary.couponDiscount > 0 ? { label: `Coupon Discount (${summary.couponDiscount}%)`, value: `-${fmt((summary.subtotal - summary.discount) * (summary.couponDiscount / 100))}`, bold: false, green: true } : null,
               isIgst
                 ? (summary.igst > 0 ? { label: 'IGST', value: fmt(summary.igst), bold: false } : null)
                 : null,
@@ -237,13 +263,31 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
         </div>
 
         {/* ── BOTTOM BLUE ACCENT BAR ── */}
-        <div style={{ height: '4px', background: 'linear-gradient(90deg, #2563EB 0%, #111111 50%, #2563EB 100%)', borderRadius: '2px', marginTop: '4mm' }} />
+        <div style={{ height: '4px', background: 'linear-gradient(90deg, #fff823ff 0%, #111111 50%, #fff823ff 100%)', borderRadius: '2px', marginTop: '4mm' }} />
       </div>
 
       {/* ── Page 2: Terms and Conditions (Separate Page) ── */}
-      <div style={{ pageBreakBefore: 'always', paddingTop: '8mm', display: 'flex', flexDirection: 'column', minHeight: '270mm' }}>
+      <div style={{ pageBreakBefore: 'always', position: 'relative', height: '202mm', padding: '8mm 12mm 12mm 12mm', boxSizing: 'border-box', display: 'flex', flexDirection: 'column' }}>
+        {/* Background Watermark */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '260px',
+          height: 'auto',
+          opacity: 0.10,
+          pointerEvents: 'none',
+          zIndex: 0,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <img src={elmenLogo} alt="Watermark" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
+        </div>
+
         {/* Header decoration */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1.5px solid #2563EB', paddingBottom: '3mm', marginBottom: '6mm' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1.5px solid #fff823ff', paddingBottom: '3mm', marginBottom: '6mm', zIndex: 1 }}>
           <span style={{ fontSize: '10px', fontWeight: '900', color: '#111', letterSpacing: '0.5px' }}>TERMS, POLICIES &amp; COMPLIANCE</span>
           <span style={{ fontSize: '8px', color: '#888' }}>Invoice Reference: {invoice.invoiceNo}</span>
         </div>

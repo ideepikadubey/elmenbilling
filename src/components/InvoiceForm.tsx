@@ -78,11 +78,12 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ isIgst, setIsIgst, onS
     watchItems.forEach((item, index) => {
       const qty = Number(item.qty) || 0;
       const price = Number(item.unitPrice) || 0;
-      const discount = Number(item.discount) || 0;
+      const discountPercent = Number(item.discount) || 0;
       const gstPercent = Number(item.gstPercent) || 0;
 
       const itemSubtotal = qty * price;
-      const taxableValue = Math.max(0, itemSubtotal - discount);
+      const discountAmount = itemSubtotal * (discountPercent / 100);
+      const taxableValue = Math.max(0, itemSubtotal - discountAmount);
       const itemGst = taxableValue * (gstPercent / 100);
       const rowTotal = taxableValue + itemGst;
 
@@ -92,12 +93,13 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ isIgst, setIsIgst, onS
       }
 
       subtotal += itemSubtotal;
-      totalDiscount += discount;
+      totalDiscount += discountAmount;
       totalGst += itemGst;
     });
 
     const summarySubtotal = Math.max(0, subtotal - totalDiscount);
-    const taxableAfterCoupon = Math.max(0, summarySubtotal - Number(watchCouponDiscount));
+    const couponDiscountAmount = summarySubtotal * ((Number(watchCouponDiscount) || 0) / 100);
+    const taxableAfterCoupon = Math.max(0, summarySubtotal - couponDiscountAmount);
     
     // Recalculate taxes based on taxable value after coupon discount
     // For simplicity, we distribute coupon discount proportionally to compute exact CGST/SGST/IGST
@@ -370,6 +372,16 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ isIgst, setIsIgst, onS
             const availableSizes = currentMetadata ? currentMetadata.sizes : [];
             const availableFlavors = currentMetadata ? currentMetadata.flavors : [];
 
+            const qty = Number(currentItem?.qty) || 0;
+            const price = Number(currentItem?.unitPrice) || 0;
+            const discountPercent = Number(currentItem?.discount) || 0;
+            const gstPercent = Number(currentItem?.gstPercent) || 0;
+
+            const itemSubtotal = qty * price;
+            const discountAmount = itemSubtotal * (discountPercent / 100);
+            const taxableValue = Math.max(0, itemSubtotal - discountAmount);
+            const gstAmount = taxableValue * (gstPercent / 100);
+
             return (
               <div 
                 key={field.id} 
@@ -387,10 +399,10 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ isIgst, setIsIgst, onS
                   </div>
                   {fields.length > 1 && (
                     <button
-                      type="button"
-                      onClick={() => remove(index)}
-                      className="p-1.5 bg-red-50 hover:bg-red-500 text-red-400 hover:text-white rounded-lg border border-red-200 hover:border-red-500 transition-all duration-200"
-                      title="Remove line item"
+                       type="button"
+                       onClick={() => remove(index)}
+                       className="p-1.5 bg-red-50 hover:bg-red-500 text-red-400 hover:text-white rounded-lg border border-red-200 hover:border-red-500 transition-all duration-200"
+                       title="Remove line item"
                     >
                       <Trash2 size={13} />
                     </button>
@@ -487,11 +499,12 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ isIgst, setIsIgst, onS
 
                   {/* Discount */}
                   <div>
-                    <label className="glass-label">Discount (₹)</label>
+                    <label className="glass-label">Discount (%)</label>
                     <input
                       type="number"
                       step="0.01"
                       min="0"
+                      max="100"
                       {...register(`items.${index}.discount` as const, { valueAsNumber: true })}
                       className="glass-input w-full text-sm text-green-400 font-semibold"
                       placeholder="0.00"
@@ -547,13 +560,13 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ isIgst, setIsIgst, onS
                   <div>
                     <span>Taxable: </span>
                     <span className="font-semibold text-elmen-text">
-                      ₹{Math.max(0, (Number(currentItem?.qty) || 0) * (Number(currentItem?.unitPrice) || 0) - (Number(currentItem?.discount) || 0)).toFixed(2)}
+                      ₹{taxableValue.toFixed(2)}
                     </span>
                   </div>
                   <div>
                     <span>GST (5%): </span>
-                    <span className={`font-semibold ${ Number(currentItem?.gstPercent) === 5 ? 'text-emerald-600' : 'text-elmen-muted' }`}>
-                      ₹{(Math.max(0, (Number(currentItem?.qty) || 0) * (Number(currentItem?.unitPrice) || 0) - (Number(currentItem?.discount) || 0)) * ((Number(currentItem?.gstPercent) || 0) / 100)).toFixed(2)}
+                    <span className={`font-semibold ${ gstPercent === 5 ? 'text-emerald-600' : 'text-elmen-muted' }`}>
+                      ₹{gstAmount.toFixed(2)}
                     </span>
                   </div>
                   <div>
@@ -572,23 +585,31 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ isIgst, setIsIgst, onS
       {/* ---------------- SECTION 5: SUMMARY SETTINGS ---------------- */}
       <section className="py-6 relative">
         <div className="absolute top-0 right-0 w-24 h-24 bg-elmen-orange/5 rounded-full blur-2xl pointer-events-none" />
-        <div className="flex items-center gap-3 border-b border-elmen-gray pb-4 mb-6">
-          <div className="p-2.5 bg-elmen-orange/10 rounded-xl text-elmen-orange">
-            <DollarSign size={20} />
+        <div className="flex items-center justify-between border-b border-elmen-gray pb-4 mb-6">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 bg-elmen-orange/10 rounded-xl text-elmen-orange">
+              <DollarSign size={20} />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold tracking-wide text-elmen-text">Order Summary Settings</h2>
+              <p className="text-xs text-elmen-muted">Configure global discounts, shipping, and cash updates</p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-lg font-semibold tracking-wide text-elmen-text">Order Summary Settings</h2>
-            <p className="text-xs text-elmen-muted">Configure global discounts, shipping, and cash updates</p>
+          <div className="flex items-center gap-4 bg-elmen-dark px-4 py-2 rounded-xl border border-elmen-gray text-xs">
+            <span className="text-elmen-muted font-medium">Total Items: <strong className="text-elmen-text">{watchItems.filter(i => i.name).length}</strong></span>
+            <span className="text-elmen-gray">|</span>
+            <span className="text-elmen-muted font-medium">Total Qty: <strong className="text-elmen-text">{watchItems.filter(i => i.name).reduce((acc, item) => acc + (Number(item.qty) || 0), 0)}</strong></span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <div>
-            <label className="glass-label">Coupon Discount (₹)</label>
+            <label className="glass-label">Coupon Discount (%)</label>
             <input 
               type="number" 
               step="0.01"
               min="0"
+              max="100"
               {...register('summary.couponDiscount', { valueAsNumber: true })} 
               className="glass-input w-full text-green-400 font-semibold" 
               placeholder="0.00"

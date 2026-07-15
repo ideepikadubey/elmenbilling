@@ -35,10 +35,7 @@
 
 /* ── Light Form Input ── */
 .glass-input {
-  @apply bg-elmen-lightgray/60 border border-elmen-gray rounded-xl px-4 py-2.5
-         text-elmen-text placeholder-elmen-muted
-         focus:outline-none focus:ring-2 focus:ring-elmen-orange/40 focus:border-elmen-orange
-         transition-all duration-200;
+  @apply bg-elmen-lightgray/60 border border-elmen-gray rounded-xl px-4 py-2.5 text-elmen-text placeholder-elmen-muted focus:outline-none focus:ring-2 focus:ring-elmen-orange/40 focus:border-elmen-orange transition-all duration-200;
 }
 
 /* ── Form Label ── */
@@ -48,20 +45,28 @@
 
 /* ── Section Header Pill ── */
 .section-pill {
-  @apply inline-flex items-center gap-2 px-3 py-1.5 bg-elmen-orange/10 border border-elmen-orange/20
-         text-elmen-orange text-xs font-bold rounded-lg uppercase tracking-wide;
+  @apply inline-flex items-center gap-2 px-3 py-1.5 bg-elmen-orange/10 border border-elmen-orange/20 text-elmen-orange text-xs font-bold rounded-lg uppercase tracking-wide;
 }
 
 /* ── Status badges ── */
-.badge-paid   { @apply bg-emerald-100 text-emerald-700 border border-emerald-200; }
-.badge-pending{ @apply bg-amber-100   text-amber-700   border border-amber-200;   }
-.badge-partial{ @apply bg-sky-100     text-sky-700     border border-sky-200;     }
+.badge-paid {
+  @apply bg-emerald-100 text-emerald-700 border border-emerald-200;
+}
+
+.badge-pending {
+  @apply bg-amber-100 text-amber-700 border border-amber-200;
+}
+
+.badge-partial {
+  @apply bg-sky-100 text-sky-700 border border-sky-200;
+}
 
 /* A4 Print Styling — stays white always */
 @media print {
   @page {
     margin: 0;
   }
+
   body {
     background-color: #ffffff !important;
     color: #000000 !important;
@@ -91,12 +96,15 @@
     border-radius: 0 !important;
     border: none !important;
     width: 210mm !important;
-    min-height: 297mm !important;
+
     margin: 0 !important;
-    padding: 14mm 16mm !important;
+    padding: 0 !important;
+
+    min-height: auto !important;
   }
 
   tr {
     page-break-inside: avoid !important;
+    page-break-after: avoid !important;
   }
 }
