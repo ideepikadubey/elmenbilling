@@ -193,7 +193,21 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#f8fafc', padding: '10px 14px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-              <img src={elmenQR} alt="UPI QR Code" style={{ width: '56px', height: '56px', border: '1px solid #cbd5e1', borderRadius: '6px', padding: '2px', background: '#fff', flexShrink: 0, objectFit: 'contain' }} />
+              <img
+                src={elmenQR}
+                alt="UPI QR Code"
+                style={{
+                  width: '72px',
+                  height: '72px',
+                  border: '1px solid #cbd5e1',
+                  borderRadius: '6px',
+                  padding: '2px',
+                  background: '#fff',
+                  flexShrink: 0,
+                  objectFit: 'contain',
+                  imageRendering: 'pixelated',
+                }}
+              />
               <div>
                 <div style={{ fontWeight: '800', color: '#111', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Scan to Pay (UPI)</div>
                 <div style={{ color: '#555', fontSize: '7.5px', marginTop: '2px', lineHeight: '1.3' }}>Pay instantly via any UPI app. Scan this code to initiate transfer.</div>

@@ -338,8 +338,8 @@ export default function App() {
       const opt = {
         margin: 0,
         filename: `Invoice-${watchInvoiceNo || 'ELMEN'}.pdf`,
-        image: { type: 'jpeg' as const, quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, letterRendering: true, backgroundColor: '#ffffff' },
+        image: { type: 'png' as const },
+        html2canvas: { scale: 3, useCORS: true, letterRendering: true, backgroundColor: '#ffffff' },
         jsPDF: { unit: 'mm', format: 'a5', orientation: 'portrait' as const },
         pagebreak: { mode: 'css' }
       };
