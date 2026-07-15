@@ -50,7 +50,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
         {/* Background Watermark */}
         <div style={{
           position: 'absolute',
-          top: '50%',
+          top: '60%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: '260px',
@@ -271,7 +271,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
         {/* Background Watermark */}
         <div style={{
           position: 'absolute',
-          top: '50%',
+          top: '70%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: '260px',
