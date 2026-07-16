@@ -335,35 +335,38 @@ export default function App() {
       wrapper.style.left = '-9999px';
       wrapper.style.top = '0';
 
-      const opt = {
-        margin: 0,
-        filename: `Invoice-${watchInvoiceNo || 'ELMEN'}.pdf`,
-        image: { type: 'png' as const },
-        html2canvas: { scale: 3, useCORS: true, letterRendering: true, backgroundColor: '#ffffff' },
-        jsPDF: { unit: 'mm', format: 'a5', orientation: 'portrait' as const },
-        pagebreak: { mode: 'css' }
-      };
+      // Give browser time to finish laying out and rendering images in block display before html2canvas screenshot
+      setTimeout(() => {
+        const opt = {
+          margin: 0,
+          filename: `Invoice-${watchInvoiceNo || 'ELMEN'}.pdf`,
+          image: { type: 'png' as const },
+          html2canvas: { scale: 4, useCORS: true, letterRendering: true, backgroundColor: '#ffffff' },
+          jsPDF: { unit: 'mm', format: 'a5', orientation: 'portrait' as const },
+          pagebreak: { mode: 'css' }
+        };
 
-      // @ts-ignore
-      import('html2pdf.js').then((module) => {
-        const html2pdf = module.default || module;
-        html2pdf().from(invoiceElement).set(opt).save()
-          .then(() => {
-            triggerToast('PDF downloaded successfully!');
-            wrapper.style.display = '';
-            wrapper.style.position = '';
-            wrapper.style.left = '';
-            wrapper.style.top = '';
-          })
-          .catch(() => {
-            triggerToast('PDF generation failed.', 'error');
-            wrapper.style.display = '';
-          });
-      }).catch((err) => {
-        console.error(err);
-        triggerToast('Failed to load PDF library.', 'error');
-        wrapper.style.display = '';
-      });
+        // @ts-ignore
+        import('html2pdf.js').then((module) => {
+          const html2pdf = module.default || module;
+          html2pdf().from(invoiceElement).set(opt).save()
+            .then(() => {
+              triggerToast('PDF downloaded successfully!');
+              wrapper.style.display = '';
+              wrapper.style.position = '';
+              wrapper.style.left = '';
+              wrapper.style.top = '';
+            })
+            .catch(() => {
+              triggerToast('PDF generation failed.', 'error');
+              wrapper.style.display = '';
+            });
+        }).catch((err) => {
+          console.error(err);
+          triggerToast('Failed to load PDF library.', 'error');
+          wrapper.style.display = '';
+        });
+      }, 150);
     });
   };
 

@@ -197,11 +197,10 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
                 src={elmenQR}
                 alt="UPI QR Code"
                 style={{
-                  width: '72px',
-                  height: '72px',
-                  border: '1px solid #cbd5e1',
+                  width: '80px',
+                  height: '80px',
                   borderRadius: '6px',
-                  padding: '2px',
+                  padding: '6px',
                   background: '#fff',
                   flexShrink: 0,
                   objectFit: 'contain',
