@@ -30,7 +30,9 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
       id="invoice-printable"
       className="print-invoice-container"
       style={{
-        width: '148mm',
+        width: '100%',
+        maxWidth: '210mm',
+        margin: '0 auto',
         backgroundColor: '#ffffff',
         color: '#111111',
         fontFamily: "'Outfit', 'Inter', Arial, sans-serif",
@@ -42,26 +44,28 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
         position: 'relative',
         boxShadow: '0 25px 80px rgba(0,0,0,0.25)',
         borderRadius: '4px',
-        overflow: 'hidden',
       }}
     >
-      {/* Page 1 wrapper */}
-      <div style={{ position: 'relative', height: '202mm', padding: '8mm 12mm 12mm 12mm', boxSizing: 'border-box', display: 'flex', flexDirection: 'column' }}>
+      {/* Main Invoice Section */}
+      <div style={{ position: 'relative', padding: '8mm 12mm 6mm 12mm', boxSizing: 'border-box', display: 'flex', flexDirection: 'column' }}>
         {/* Background Watermark */}
-        <div style={{
-          position: 'absolute',
-          top: '60%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '260px',
-          height: 'auto',
-          opacity: 0.10,
-          pointerEvents: 'none',
-          zIndex: 0,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
+        <div
+          className="print-watermark"
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '320px',
+            height: 'auto',
+            opacity: 0.08,
+            pointerEvents: 'none',
+            zIndex: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <img src={elmenLogo} alt="Watermark" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
         </div>
 
@@ -157,7 +161,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
               const taxable = Math.max(0, itemSubtotal - discountAmt);
               const gstAmt = taxable * (item.gstPercent / 100);
               return (
-                <tr key={item.id} style={{ backgroundColor: idx % 2 === 0 ? '#ffffff' : '#fafafa', borderBottom: '1px solid #f0f0f0' }}>
+                <tr key={item.id} style={{ backgroundColor: idx % 2 === 0 ? '#ffffff' : '#fafafa', borderBottom: '1px solid #f0f0f0', pageBreakInside: 'avoid', breakInside: 'avoid' }}>
                   <td style={{ padding: '8px 8px', color: '#999', fontFamily: 'monospace' }}>{idx + 1}</td>
                   <td style={{ padding: '8px 8px' }}>
                     <div style={{ fontWeight: '700', color: '#111', fontSize: '9.5px' }}>{item.name || '—'}</div>
@@ -182,7 +186,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
         </table>
 
         {/* ── Page 1 Bottom: Totals & QR Code ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 220px', gap: '8mm', marginTop: 'auto', marginBottom: '4mm' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 220px', gap: '8mm', marginTop: 'auto', marginBottom: '4mm', pageBreakInside: 'avoid', breakInside: 'avoid' }}>
           {/* Left Side: QR Code + Pay Info */}
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '3mm' }}>
             {/* Total Items & Qty Block */}
@@ -279,23 +283,26 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
         <div style={{ height: '4px', background: 'linear-gradient(90deg, #fff823ff 0%, #111111 50%, #fff823ff 100%)', borderRadius: '2px', marginTop: '4mm' }} />
       </div>
 
-      {/* ── Page 2: Terms and Conditions (Separate Page) ── */}
-      <div style={{ pageBreakBefore: 'always', position: 'relative', height: '202mm', padding: '8mm 12mm 12mm 12mm', boxSizing: 'border-box', display: 'flex', flexDirection: 'column' }}>
+      {/* ── Terms and Conditions Section ── */}
+      <div style={{ position: 'relative', padding: '6mm 12mm 12mm 12mm', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', pageBreakInside: 'avoid', breakInside: 'avoid', marginTop: '4mm' }}>
         {/* Background Watermark */}
-        <div style={{
-          position: 'absolute',
-          top: '70%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '260px',
-          height: 'auto',
-          opacity: 0.10,
-          pointerEvents: 'none',
-          zIndex: 0,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
+        <div
+          className="print-watermark"
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '320px',
+            height: 'auto',
+            opacity: 0.08,
+            pointerEvents: 'none',
+            zIndex: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <img src={elmenLogo} alt="Watermark" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
         </div>
 

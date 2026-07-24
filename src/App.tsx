@@ -342,7 +342,7 @@ export default function App() {
           filename: `Invoice-${watchInvoiceNo || 'ELMEN'}.pdf`,
           image: { type: 'png' as const },
           html2canvas: { scale: 4, useCORS: true, letterRendering: true, backgroundColor: '#ffffff' },
-          jsPDF: { unit: 'mm', format: 'a5', orientation: 'portrait' as const },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' as const },
           pagebreak: { mode: 'css' }
         };
 

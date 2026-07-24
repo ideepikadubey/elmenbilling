@@ -157,7 +157,7 @@ export const PRODUCT_CATALOG: CatalogProduct[] = [
     defaultPrice: 399,
     gstPercent: 0,
     sizes: ['Standard'],
-    flavors: ['Unflavored']
+    flavors: ['NA']
   },
   {
     id: 'prod-11',
@@ -165,6 +165,14 @@ export const PRODUCT_CATALOG: CatalogProduct[] = [
     defaultPrice: 149,
     gstPercent: 0,
     sizes: ['Standard'],
-    flavors: ['Unflavored']
+    flavors: ['NA']
+  },
+  {
+    id: 'prod-12',
+    name: 'ELMEN Towel',
+    defaultPrice: 500,
+    gstPercent: 0,
+    sizes: ['Medium'],
+    flavors: ['NA']
   }
 ];

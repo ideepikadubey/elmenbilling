@@ -64,7 +64,7 @@
 /* A4 Print Styling — stays white always */
 @media print {
   @page {
-    margin: 0;
+    margin: 8mm;
   }
 
   body {
@@ -95,16 +95,26 @@
     box-shadow: none !important;
     border-radius: 0 !important;
     border: none !important;
-    width: 210mm !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
+    width: 100% !important;
+    max-width: 210mm !important;
+    margin: 0 auto !important;
+    padding: 4mm 8mm !important;
     min-height: auto !important;
   }
 
   tr {
     page-break-inside: avoid !important;
-    page-break-after: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .print-watermark {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 320px !important;
+    opacity: 0.08 !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
   }
 }
