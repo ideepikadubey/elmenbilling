@@ -160,7 +160,7 @@ export const PRODUCT_CATALOG: CatalogProduct[] = [
     flavors: ['NA']
   },
   {
-    id: 'prod-11',
+    id: 'prod-11', 
     name: 'ELMEN Plastic Shaker',
     defaultPrice: 149,
     gstPercent: 0,
