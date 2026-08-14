@@ -16,9 +16,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
     new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 2 }).format(n);
 
   const getStatus = () => {
-    const isOverdue = invoice.dueDate && new Date(invoice.dueDate) < new Date() && invoice.paymentStatus !== 'Paid';
     if (invoice.paymentStatus === 'Paid') return { label: 'PAID', color: '#16a34a' };
-    if (isOverdue) return { label: 'OVERDUE', color: '#dc2626' };
     if (invoice.paymentStatus === 'Partial') return { label: 'PARTIAL', color: '#d97706' };
     return { label: 'PENDING', color: '#ea580c' };
   };
@@ -101,7 +99,6 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, isIgst }) 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5mm', fontSize: '9px', color: '#555', marginBottom: '3mm', paddingBottom: '3mm', borderBottom: '1.5px solid #eee' }}>
           <div><strong style={{ color: '#111', fontWeight: '700' }}>Invoice #:</strong> {invoice.invoiceNo}</div>
           {invoice.orderNo && <div><strong style={{ color: '#111', fontWeight: '700' }}>Order #:</strong> {invoice.orderNo}</div>}
-          <div><strong style={{ color: '#111', fontWeight: '700' }}>Due Date:</strong> {invoice.dueDate}</div>
           <div><strong style={{ color: '#111', fontWeight: '700' }}>Payment Method:</strong> {invoice.paymentMethod}</div>
         </div>
 

@@ -269,7 +269,7 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ isIgst, setIsIgst, onS
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           <div>
             <label className="glass-label">Invoice Number</label>
             <input 
@@ -297,15 +297,6 @@ export const InvoiceForm: React.FC<InvoiceFormProps> = ({ isIgst, setIsIgst, onS
             <input 
               type="date" 
               {...register('invoice.invoiceDate')} 
-              className="glass-input w-full text-sm" 
-            />
-          </div>
-
-          <div>
-            <label className="glass-label">Due Date</label>
-            <input 
-              type="date" 
-              {...register('invoice.dueDate')} 
               className="glass-input w-full text-sm" 
             />
           </div>

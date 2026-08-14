@@ -52,7 +52,7 @@ const invoiceSchema = z.object({
     invoiceNo: z.string().min(1, 'Invoice number is required'),
     orderNo: z.string().default(''),
     invoiceDate: z.string().min(1, 'Invoice date is required'),
-    dueDate: z.string().min(1, 'Due date is required'),
+    dueDate: z.string().optional(),
     paymentMethod: z.enum(['Cash', 'UPI', 'Card', 'Net Banking', 'COD']),
     paymentStatus: z.enum(['Paid', 'Pending', 'Partial'])
   }),
@@ -97,9 +97,6 @@ const invoiceSchema = z.object({
 const getDefaultValues = (invoiceNo = 'EL-INV-LOADING'): InvoiceData => {
   const today = new Date();
   const format = (d: Date) => d.toISOString().split('T')[0];
-  
-  const dueDate = new Date();
-  dueDate.setDate(today.getDate() + 15);
 
   const randomOrder = Math.floor(100000 + Math.random() * 900000);
 
@@ -117,7 +114,6 @@ const getDefaultValues = (invoiceNo = 'EL-INV-LOADING'): InvoiceData => {
       invoiceNo,
       orderNo: `ORD-${randomOrder}`,
       invoiceDate: format(today),
-      dueDate: format(dueDate),
       paymentMethod: 'UPI',
       paymentStatus: 'Pending'
     },

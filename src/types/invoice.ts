@@ -22,7 +22,7 @@ export interface InvoiceDetails {
   invoiceNo: string;
   orderNo: string;
   invoiceDate: string;
-  dueDate: string;
+  dueDate?: string;
   paymentMethod: 'Cash' | 'UPI' | 'Card' | 'Net Banking' | 'COD';
   paymentStatus: 'Paid' | 'Pending' | 'Partial';
 }
@@ -81,7 +81,7 @@ export interface CatalogProduct {
 export const PRODUCT_CATALOG: CatalogProduct[] = [
   {
     id: 'prod-1',
-    name: 'ELMEN Clean Whey Protein',
+    name: 'ELMEN Clean Whey Protein 2kg',
     defaultPrice: 6499,
     gstPercent: 0,
     sizes: ['2kg / 4.4 lbs (2000g)'],
@@ -174,5 +174,21 @@ export const PRODUCT_CATALOG: CatalogProduct[] = [
     gstPercent: 0,
     sizes: ['Medium'],
     flavors: ['NA']
+  },
+  {
+    id: 'prod-13',
+    name: 'ELMEN Isolate Whey Protein 1kg',
+    defaultPrice: 6999,
+    gstPercent: 0,
+    sizes: ['1kg / 2.2 lbs (1000g)'],
+    flavors: ['Chocolate', 'Kesar Badam', 'Cookie & Cream', 'Malai Kulfi', 'Vanilla', 'Unflavored']
+  },
+  {
+    id: 'prod-14',
+    name: 'ELMEN Clean Whey Protein 1kg',
+    defaultPrice: 4499,
+    gstPercent: 0,
+    sizes: ['1kg / 2.2 lbs (1000g)'],
+    flavors: ['Chocolate', 'Kesar Badam', 'Cookie & Cream', 'Malai Kulfi', 'Vanilla', 'Unflavored']
   }
 ];
